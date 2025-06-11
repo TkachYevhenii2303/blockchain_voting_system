@@ -1,8 +1,9 @@
 import axios from 'axios';
-import { useEffect } from 'react';
+
+export const BASE_URL = process.env.BASE_API_URL || "http://localhost:8000";
 
 const axiosInstance = axios.create({
-  baseURL: process.env.BASE_API_URL,
+  baseURL: BASE_URL,
 });
 
 axiosInstance.interceptors.request.use(

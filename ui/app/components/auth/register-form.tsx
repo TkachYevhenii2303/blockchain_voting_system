@@ -1,15 +1,24 @@
+"use client";
+
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/shadcn/ui/button';
 import { Card, CardContent } from '@/components/shadcn/ui/card';
 import { Input } from '@/components/shadcn/ui/input';
 import { Label } from '@/components/shadcn/ui/label';
 import rhamster_logo from '../../../public/characters/rhamster_back.jpg';
-import { MediaBtns } from './media-btns';
+import { toast } from 'sonner';
+
 
 export function RegisterForm({
   className,
   ...props
 }: React.ComponentProps<'div'>) {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    location.href = '/wallets';
+    toast.success('Registration successful');
+  };
+
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
       <Card className="overflow-hidden p-0 rounded-lg border-none">
@@ -21,7 +30,7 @@ export function RegisterForm({
               className="absolute h-full w-full object-cover"
             />
           </div>
-          <form className="p-8 bg-[#22223b]">
+          <form className="p-8 bg-[#22223b]" onSubmit={handleSubmit}>
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-2">
                 <h1 className="text-2xl font-bold font-mulish">
@@ -110,15 +119,9 @@ export function RegisterForm({
                   />
                 </span>
               </Button>
-              <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
-                <span className="relative z-10 px-4 font-inter text-muted-foreground tracking-[0.1em]">
-                  Or continue with
-                </span>
-              </div>
-              <MediaBtns />
               <div className="text-center text-sm font-mulish">
                 Already have an account?{' '}
-                <a href="#" className="underline underline-offset-4">
+                <a href="/auth/sign-in" className="underline underline-offset-4">
                   Login
                 </a>
               </div>

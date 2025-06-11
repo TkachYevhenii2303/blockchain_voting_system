@@ -5,12 +5,13 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Vote } from '@/modules/voting/entities/vote.entity';
 import { SoftDeletableEntity } from '@/common/entities/soft-deletable-entity.entity';
+import { IsNotEmpty } from 'class-validator';
 import {
   TransactionStatus,
   TransactionType,
 } from '@/common/types/transaction-types.enum';
-import { IsNotEmpty } from 'class-validator';
 
 @Entity()
 export class Transaction extends SoftDeletableEntity {
@@ -36,9 +37,9 @@ export class Transaction extends SoftDeletableEntity {
 
   @Column({ type: 'varchar', length: 255 })
   @IsNotEmpty()
-  toAddress: string;
-
-  @Column({ type: 'varchar', length: 255 })
-  @IsNotEmpty()
   error: string;
+
+  @OneToOne(() => Vote, (vote) => vote.transaction)
+  @JoinColumn({ name: 'transactionId' })
+  vote: Vote;
 }

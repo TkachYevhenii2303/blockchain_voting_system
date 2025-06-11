@@ -1,6 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { SoftDeletableEntity } from '@/common/entities/soft-deletable-entity.entity';
 import { IsBoolean, IsNotEmpty, IsNumber } from 'class-validator';
+import { User } from '@/modules/auth/entities/user.entity';
 
 @Entity()
 export class Wallet extends SoftDeletableEntity {
@@ -20,8 +21,7 @@ export class Wallet extends SoftDeletableEntity {
   @IsNumber()
   balance: number;
 
-  @Column({ type: 'boolean', default: false })
-  @IsNotEmpty()
-  @IsBoolean()
-  isActive: boolean;
+  @OneToOne(() => User, (user) => user.wallet, {})
+  @JoinColumn({ name: 'userId' })
+  user: User;
 }

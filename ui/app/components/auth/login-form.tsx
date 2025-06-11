@@ -1,20 +1,28 @@
+"use client";
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/shadcn/ui/button';
 import { Card, CardContent } from '@/components/shadcn/ui/card';
 import { Input } from '@/components/shadcn/ui/input';
 import { Label } from '@/components/shadcn/ui/label';
 import rhamster_logo from '../../../public/characters/rhamster_front.png';
-import { MediaBtns } from './media-btns';
+import { toast } from 'sonner';
+
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<'div'>) {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    location.href = '/wallets';
+    toast.success('Login successful');
+  };
+
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
       <Card className="overflow-hidden p-0 rounded-lg border-none">
         <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-8 bg-[#22223b]">
+          <form className="p-8 bg-[#22223b]" onSubmit={handleSubmit}>
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-2">
                 <h1 className="text-2xl font-bold font-mulish">
@@ -57,6 +65,9 @@ export function LoginForm({
               </div>
               <Button
                 type="submit"
+                onClick={() => {
+                  location.href = '/wallets';
+                }}
                 className="group relative w-full font-mulish uppercase tracking-[0.15em] rounded-xs cursor-pointer
                           bg-gradient-to-r from-[#ffb700] via-[#ffaa00] to-[#ffa200] 
                           hover:from-[#e6a500] hover:via-[#e69900] hover:to-[#e69200]
@@ -89,15 +100,9 @@ export function LoginForm({
                   />
                 </span>
               </Button>
-              <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
-                <span className="relative z-10 px-4 font-inter text-muted-foreground tracking-[0.1em]">
-                  Or continue with
-                </span>
-              </div>
-              <MediaBtns />
               <div className="text-center text-sm font-mulish">
                 Don&apos;t have an account?{' '}
-                <a href="#" className="underline underline-offset-4">
+                <a href="/auth/sign-up" className="underline underline-offset-4">
                   Sign up
                 </a>
               </div>

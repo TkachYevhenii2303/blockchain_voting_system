@@ -25,11 +25,6 @@ async function bootstrap() {
     .setTitle('Blockchain Voting System API')
     .setDescription('API documentation for the blockchain-based voting system')
     .setVersion('1.0')
-    .addTag('blockchain', 'Blockchain operations')
-    .addTag('wallets', 'Wallet management')
-    .addTag('transactions', 'Transaction operations')
-    .addTag('voting', 'Voting operations')
-    .addTag('elections', 'Election management')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

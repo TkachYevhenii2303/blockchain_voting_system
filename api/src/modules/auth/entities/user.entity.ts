@@ -12,6 +12,7 @@ import {
   IsEnum,
   IsOptional,
   IsEmail,
+  IsUUID,
 } from 'class-validator';
 import { Credentials } from './credentials.entity';
 import { UserRole, UserRoles } from '@/common/types/user-roles.enum';
@@ -20,12 +21,15 @@ import { BaseEntity } from '@/common/entities/base-entity.entity';
 import { RefreshToken } from './refresh-token.entity';
 import { Exclude } from 'class-transformer';
 import { UserSession } from './user-session.entity';
+import { Wallet } from '@/modules/blockchain/entities/wallet.entity';
+import { Vote } from '@/modules/voting/entities/vote.entity';
 
 @Entity('users')
 @Index(['email'], { unique: true, where: 'email IS NOT NULL' })
 export class User extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  @IsUUID()
+  id: string;
 
   @Column({ type: 'varchar', length: 255, nullable: true })
   @IsString()
@@ -96,4 +100,14 @@ export class User extends BaseEntity {
     cascade: true,
   })
   credentials: Credentials;
+
+  @OneToOne(() => Wallet, (wallet) => wallet.user, {
+    cascade: true,
+  })
+  wallet: Wallet;
+
+  @OneToMany(() => Vote, (vote) => vote.user, {
+    cascade: true,
+  })
+  votes: Vote[];
 }

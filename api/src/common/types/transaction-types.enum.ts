@@ -1,4 +1,4 @@
-const TransactionTypes = {
+export const TransactionTypes = {
   VOTE: 'vote',
   ELECTION_CREATED: 'election_created',
   CANDIDATE_ADD: 'candidate_add',
