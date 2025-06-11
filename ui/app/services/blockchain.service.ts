@@ -46,8 +46,7 @@ class BlockchainService {
   // Wallet endpoints
   createWallet = async (
   ): Promise<WalletResponse> => {
-    const response = await axios.post<WalletResponse>(
-      "/wallet/generate"
+    const response = await axios.post<WalletResponse>(`${BASE_URL}/wallet/generate`
     );
     return response.data;
   };

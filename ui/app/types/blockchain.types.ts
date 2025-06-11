@@ -5,6 +5,7 @@ export interface Wallet {
   balance: number;
   isActive: boolean;
   createdAt: string;
+  privateKey?: string;
 }
 
 export interface Voting {

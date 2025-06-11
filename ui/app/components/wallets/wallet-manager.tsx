@@ -252,7 +252,6 @@ export const EnhancedWalletManager = ({
   const [wallet, setWallet] = useState<Wallet>();
   const [allWallets, setAllWallets] = useState<Wallet[]>([]);
   const [balance, setBalance] = useState<string>("0");
-  const [isLoading, setIsLoading] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoadingWallets, setIsLoadingWallets] = useState(false);
@@ -260,27 +259,6 @@ export const EnhancedWalletManager = ({
   const [copied, setCopied] = useState<string | null>(null);
   const [isWalletDialogOpen, setIsWalletDialogOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-
-  useEffect(() => {
-    // loadWallet();
-  }, [userId]);
-
-  // const loadWallet = async () => {
-  //   setIsLoading(true);
-  //   try {
-  //     const walletData = await blockchainService.getAllWallets();
-  //     console.log(walletData);
-  //     if (walletData && walletData.length > 0) {
-  //       setWallet(walletData[0]);
-  //       setAllWallets(walletData);
-  //       await refreshBalance(walletData[0].address);
-  //     }
-  //   } catch (error) {
-  //     toast.error("Failed to load wallet data");
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
 
   const loadAllWallets = async () => {
     setIsLoadingWallets(true);
@@ -436,7 +414,7 @@ export const EnhancedWalletManager = ({
                         <div>
                           <div className="flex items-center space-x-2">
                             <p className="font-mono text-sm font-medium">
-                              {formatAddress(walletItem.address)}
+                              {walletItem.address? formatAddress(walletItem.address):walletItem.address }
                             </p>
                             {wallet?.id === walletItem.id && (
                               <Badge variant="default" className="text-xs">
@@ -768,8 +746,8 @@ export const EnhancedWalletManager = ({
                 <Input
                   value={
                     showPrivateKey
-                      ? wallet.publicKey
-                      : formatAddress(wallet.publicKey)
+                      ? wallet.privateKey || wallet.publicKey
+                      : formatAddress(wallet.publicKey || wallet.publicKey)
                   }
                   readOnly
                   className="font-mono text-xs bg-white/50 dark:bg-white/5 border-0"

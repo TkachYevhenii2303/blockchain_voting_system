@@ -74,7 +74,10 @@ export default function VotingsPage() {
   const hasUserVoted = (electionId: string) => {
     const userVotes = getUserVotes();
 
-    return !!userVotes.map((vote: any) => vote.electionId === electionId);
+    if (Array.isArray(userVotes)) {
+      return userVotes.some((vote: any) => vote.votingId === electionId);
+    }
+    return false;
   };
 
   const getUserVoteForElection = (electionId: string) => {
