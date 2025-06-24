@@ -36,6 +36,9 @@ import {
   ArrowRight,
   CheckCircle,
 } from "lucide-react";
+import { SidebarInset, SidebarProvider } from "@/components/shadcn/ui/sidebar";
+import { AppSidebar } from "@/components/sidebar/app-sidebar";
+
 
 export default function VotingsPage() {
   const router = useRouter();
@@ -167,6 +170,9 @@ export default function VotingsPage() {
   );
 
   return (
+	    <SidebarProvider>
+      <AppSidebar />
+      <SidebarInset>
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-blue-950/20 dark:via-background dark:to-purple-950/20 p-4">
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header Section */}
@@ -542,5 +548,7 @@ export default function VotingsPage() {
         </motion.div>
       </div>
     </div>
+	 </SidebarInset>
+	 </SidebarProvider>
   );
 }
